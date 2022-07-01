@@ -10,16 +10,10 @@ class BlackjackGame(initPlayers: Players) {
             hit(it, Cards.NUMBER_OF_INIT_CARDS)
         }
 
-        dealer = hitDealer(dealer, Cards.NUMBER_OF_INIT_CARDS)
+        dealer = hit(dealer, Cards.NUMBER_OF_INIT_CARDS)
     }
 
-    private fun hit(player: User, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): User {
-        val (extractedCards, newCards) = cards.pollCards(numOfCards)
-        cards = newCards
-        return player.addCards(extractedCards)
-    }
-
-    private fun hitDealer(player: Dealer, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): Dealer {
+    private fun <T : Player<T>> hit(player: T, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): T {
         val (extractedCards, newCards) = cards.pollCards(numOfCards)
         cards = newCards
         return player.addCards(extractedCards)
@@ -29,7 +23,7 @@ class BlackjackGame(initPlayers: Players) {
         return players.isAllOver()
     }
 
-    fun playTurn(getHit: (User) -> Boolean): User {
+    fun playUser(getHit: (User) -> Boolean): User {
         val player = players.findNotOver().first()
         if (getHit(player)) {
             players = players.update(hit(player))
@@ -44,7 +38,7 @@ class BlackjackGame(initPlayers: Players) {
     }
 
     fun playDealer(): Dealer {
-        dealer = hitDealer(dealer)
+        dealer = hit(dealer)
         return dealer
     }
 

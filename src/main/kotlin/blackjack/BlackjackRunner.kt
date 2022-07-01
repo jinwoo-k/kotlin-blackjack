@@ -9,7 +9,7 @@ fun main() {
     OutputView.printInitialState(blackjackGame)
 
     while (!blackjackGame.isGameOver()) {
-        val player = blackjackGame.playTurn(InputView::inputConditionToGiveCard)
+        val player = blackjackGame.playUser(InputView::inputConditionToGiveCard)
         OutputView.printPlayer(player)
     }
 

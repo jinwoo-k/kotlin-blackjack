@@ -22,10 +22,10 @@ class BlackjackGameTest {
 
         Assertions.assertThat(game.isGameOver()).isEqualTo(false)
         Assertions.assertThat(game.players.values[0].cards.values.size).isEqualTo(2)
-        game.playTurn { true }
+        game.playUser { true }
         Assertions.assertThat(game.players.values[0].cards.values.size).isEqualTo(3)
 
-        game.playTurn { false }
+        game.playUser { false }
         Assertions.assertThat(game.players.values[0].cards.values.size).isEqualTo(3)
         Assertions.assertThat(game.isGameOver()).isEqualTo(true)
     }
