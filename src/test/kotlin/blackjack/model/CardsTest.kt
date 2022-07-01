@@ -57,8 +57,21 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource("Ace,Six,,true", "Six,Ace,,true", "Ace,Five,,false", "Ten,Seven,,false", "Two,,,false", "Two,Three,,false", "Two,Ten,Four,false", "Two,Ten,Jack,false", "Ace,,,false", "Two,Ace,,false")
-    fun `A6 의 경우 soft라 한다`(cardNumber1: CardNumber, cardNumber2: CardNumber?, cardNumber3: CardNumber?, isSoft: Boolean) {
+    @CsvSource(
+        "Ace,Six,,true",
+        "Six,Ace,,true",
+        "Ace,Five,,false",
+        "Ten,Seven,,false",
+        "Two,,,false",
+        "Two,Three,,false",
+        "Two,Ten,Four,false",
+        "Two,Ten,Jack,false",
+        "Ace,,,false",
+        "Two,Ace,,false",
+        "Ace,Two,Four,true",
+        "Ace,Ten,Six,false"
+    )
+    fun `A6, A24 등을 soft라 한다`(cardNumber1: CardNumber, cardNumber2: CardNumber?, cardNumber3: CardNumber?, isSoft: Boolean) {
         val cardList = listOf(cardNumber1, cardNumber2, cardNumber3)
             .filterNotNull()
             .map { Card(it, Suit.Heart) }

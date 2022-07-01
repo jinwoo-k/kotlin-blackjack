@@ -42,9 +42,12 @@ data class Cards(val values: List<Card>) {
         return scores.minByOrNull { it.value } ?: throw RuntimeException("score는 항상 존재해야 합니다.")
     }
 
+    private fun maxScore(): Score {
+        return scores.maxByOrNull { it.value }!!
+    }
+
     fun isSoft(): Boolean {
-        return optimalScore() == Score(DELAER_SOFT_SCORE) &&
-            values.all { it.cardNumber == CardNumber.Ace || it.cardNumber == CardNumber.Six }
+        return maxScore() == Score(DELAER_SOFT_SCORE) && values.any { it.cardNumber == CardNumber.Ace }
     }
 
     companion object {
