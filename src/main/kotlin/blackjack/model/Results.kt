@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Results(players: Players, dealer: Player) {
+class Results(players: Players, dealer: Dealer) {
     val playerResults: List<PlayerResult>
     val dealerResult: DealerResult
 

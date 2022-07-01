@@ -1,11 +1,11 @@
 package blackjack.model
 
-class Players(val values: List<Player>) {
-    fun findNotOver(): List<Player> {
+class Players(val values: List<User>) {
+    fun findNotOver(): List<User> {
         return values.filter { !it.stay }
     }
 
-    fun stay(player: Player): Players {
+    fun stay(player: User): Players {
         return Players(
             values.map {
                 if (player.name == it.name) {
@@ -17,7 +17,7 @@ class Players(val values: List<Player>) {
         )
     }
 
-    fun update(player: Player): Players {
+    fun update(player: User): Players {
         return Players(
             values.map {
                 if (player.name == it.name) {
@@ -33,11 +33,11 @@ class Players(val values: List<Player>) {
         return values.all { it.isGameOver() }
     }
 
-    fun find(name: String): Player? {
+    fun find(name: String): User? {
         return values.find { it.name == name }
     }
 
-    fun withAllPlayers(f: (Player) -> Player): Players {
+    fun withAllPlayers(f: (User) -> User): Players {
         return Players(values.map { f(it) })
     }
 }

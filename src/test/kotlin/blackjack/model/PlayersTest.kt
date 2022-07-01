@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
-    val playerList = listOf(Player("jason", Cards(listOf(Card(CardNumber.Two, Suit.Heart)))))
+    val playerList = listOf(User("jason", Cards(listOf(Card(CardNumber.Two, Suit.Heart)))))
 
     @Test
     fun `Player들을 속성으로 갖는다`() {

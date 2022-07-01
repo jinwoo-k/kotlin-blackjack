@@ -3,17 +3,23 @@ package blackjack.model
 class BlackjackGame(initPlayers: Players) {
     private var cards: Cards = Cards.shuffledCards()
     var players: Players = initPlayers
-    var dealer: Player = Player.createDealer()
+    var dealer: Dealer = Dealer()
 
     init {
         players = players.withAllPlayers {
             hit(it, Cards.NUMBER_OF_INIT_CARDS)
         }
 
-        dealer = hit(dealer, Cards.NUMBER_OF_INIT_CARDS)
+        dealer = hitDealer(dealer, Cards.NUMBER_OF_INIT_CARDS)
     }
 
-    private fun hit(player: Player, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): Player {
+    private fun hit(player: User, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): User {
+        val (extractedCards, newCards) = cards.pollCards(numOfCards)
+        cards = newCards
+        return player.addCards(extractedCards)
+    }
+
+    private fun hitDealer(player: Dealer, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): Dealer {
         val (extractedCards, newCards) = cards.pollCards(numOfCards)
         cards = newCards
         return player.addCards(extractedCards)
@@ -23,7 +29,7 @@ class BlackjackGame(initPlayers: Players) {
         return players.isAllOver()
     }
 
-    fun playTurn(getHit: (Player) -> Boolean): Player {
+    fun playTurn(getHit: (User) -> Boolean): User {
         val player = players.findNotOver().first()
         if (getHit(player)) {
             players = players.update(hit(player))
@@ -37,8 +43,8 @@ class BlackjackGame(initPlayers: Players) {
         return dealer.cards.optimalScore().value > Score.DELAER_HIT_CRITERIA && !dealer.cards.isSoft()
     }
 
-    fun playDealer(): Player {
-        dealer = hit(dealer)
+    fun playDealer(): Dealer {
+        dealer = hitDealer(dealer)
         return dealer
     }
 

@@ -1,5 +1,5 @@
 package blackjack.model
 
-interface Result {
-    val player: Player
+interface Result<P : Player<P>> {
+    val player: P
 }

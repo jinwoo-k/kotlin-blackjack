@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class PlayerTest {
+class UserTest {
     private val cards = Cards(Card(CardNumber.Ace, Suit.Heart), Card(CardNumber.Two, Suit.Heart))
-    private val player = Player("jason", cards)
+    private val player = User("jason", cards)
 
     @Test
     fun `이름과 Cards 를 속성으로 갖는다`() {
@@ -48,8 +48,8 @@ class PlayerTest {
         player2Card2: CardNumber,
         player1Win: Boolean
     ) {
-        val player1 = Player("player1", Cards(Card(player1Card1, Suit.Heart), Card(player1Card2, Suit.Heart)))
-        val player2 = Player("player2", Cards(Card(player2Card1, Suit.Heart), Card(player2Card2, Suit.Heart)))
+        val player1 = User("player1", Cards(Card(player1Card1, Suit.Heart), Card(player1Card2, Suit.Heart)))
+        val player2 = User("player2", Cards(Card(player2Card1, Suit.Heart), Card(player2Card2, Suit.Heart)))
         assertThat(player1.isWinThen(player2)).isEqualTo(player1Win)
     }
 }

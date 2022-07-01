@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test
 class ResultsTest {
     @Test
     fun `딜러, 플레이어의 결과를 생성한다`() {
-        val player1 = Player("player1").addCards(listOf(Card(CardNumber.Ten, Suit.Heart), Card(CardNumber.Ten, Suit.Spade)))
-        val player2 = Player("player2").addCards(listOf(Card(CardNumber.Nine, Suit.Club)))
+        val player1 = User("player1").addCards(listOf(Card(CardNumber.Ten, Suit.Heart), Card(CardNumber.Ten, Suit.Spade)))
+        val player2 = User("player2").addCards(listOf(Card(CardNumber.Nine, Suit.Club)))
         val players = Players(listOf(player1, player2))
-        val dealer = Player.createDealer().addCards(listOf(Card(CardNumber.Ace, Suit.Club)))
+        val dealer = Dealer().addCards(listOf(Card(CardNumber.Ace, Suit.Club)))
 
         val results = Results(players, dealer)
 

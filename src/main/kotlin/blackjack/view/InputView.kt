@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.model.User
 
 object InputView {
     private const val NAME_DELIMITER = ","
@@ -19,10 +19,10 @@ object InputView {
             return readPlayers()
         }
 
-        return Players(str.split(NAME_DELIMITER).map { Player(it) })
+        return Players(str.split(NAME_DELIMITER).map { User(it) })
     }
 
-    fun inputConditionToGiveCard(player: Player): Boolean {
+    fun inputConditionToGiveCard(player: User): Boolean {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readYesOrNo()
     }

@@ -1,3 +1,3 @@
 package blackjack.model
 
-class PlayerResult(override val player: Player, val win: Boolean) : Result
+class PlayerResult(override val player: User, val win: Boolean) : Result<User>

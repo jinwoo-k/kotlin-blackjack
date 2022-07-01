@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test
 class BlackjackGameTest {
     @Test
     fun `게임이 종료되었는지 확인한다`() {
-        val playerList = listOf(Player("jason", Cards(listOf(Card(CardNumber.Two, Suit.Heart)))))
+        val playerList = listOf(User("jason", Cards(listOf(Card(CardNumber.Two, Suit.Heart)))))
         val game = BlackjackGame(Players(playerList))
         Assertions.assertThat(game.isGameOver()).isEqualTo(false)
 
-        val playerList2 = listOf(Player("jason", Cards(listOf(Card(CardNumber.Two, Suit.Heart))), true))
+        val playerList2 = listOf(User("jason", Cards(listOf(Card(CardNumber.Two, Suit.Heart))), true))
         val game2 = BlackjackGame(Players(playerList2))
         Assertions.assertThat(game2.isGameOver()).isEqualTo(true)
     }
 
     @Test
     fun `한번의 턴을 진행한다`() {
-        val playerList = listOf(Player("jason"))
+        val playerList = listOf(User("jason"))
         val game = BlackjackGame(Players(playerList))
 
         Assertions.assertThat(game.isGameOver()).isEqualTo(false)
@@ -32,7 +32,7 @@ class BlackjackGameTest {
 
     @Test
     fun `딜러가 한번 턴을 진행한다`() {
-        val playerList = listOf(Player("jason"))
+        val playerList = listOf(User("jason"))
         val game = BlackjackGame(Players(playerList))
 
         Assertions.assertThat(game.dealer.cards.values.size).isEqualTo(2)
@@ -42,7 +42,7 @@ class BlackjackGameTest {
 
     @Test
     fun `Results를 만든다`() {
-        val playerList = listOf(Player("jason"), Player("pobi"))
+        val playerList = listOf(User("jason"), User("pobi"))
         val game = BlackjackGame(Players(playerList))
 
         val results = game.createResults()
