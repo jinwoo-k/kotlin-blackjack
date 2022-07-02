@@ -1,12 +1,12 @@
 package blackjack.model
 
-class Players(val values: List<User>) {
+class Users(val values: List<User>) {
     fun findNotOver(): List<User> {
         return values.filter { !it.stay }
     }
 
-    fun stay(player: User): Players {
-        return Players(
+    fun stay(player: User): Users {
+        return Users(
             values.map {
                 if (player.name == it.name) {
                     player.setStay()
@@ -17,8 +17,8 @@ class Players(val values: List<User>) {
         )
     }
 
-    fun update(player: User): Players {
-        return Players(
+    fun update(player: User): Users {
+        return Users(
             values.map {
                 if (player.name == it.name) {
                     player
@@ -37,7 +37,7 @@ class Players(val values: List<User>) {
         return values.find { it.name == name }
     }
 
-    fun withAllPlayers(f: (User) -> User): Players {
-        return Players(values.map { f(it) })
+    fun withAllPlayers(f: (User) -> User): Users {
+        return Users(values.map { f(it) })
     }
 }

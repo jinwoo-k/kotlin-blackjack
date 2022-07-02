@@ -1,3 +1,3 @@
 package blackjack.model
 
-class DealerResult(override val player: Dealer, val win: Int, val lose: Int) : Result<Dealer>
+class DealerResult(val player: Dealer, val win: Int, val lose: Int)

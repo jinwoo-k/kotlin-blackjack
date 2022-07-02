@@ -1,12 +1,12 @@
 package blackjack.model
 
-class BlackjackGame(initPlayers: Players) {
+class BlackjackGame(initUsers: Users) {
     private var cards: Cards = Cards.shuffledCards()
-    var players: Players = initPlayers
+    var users: Users = initUsers
     var dealer: Dealer = Dealer()
 
     init {
-        players = players.withAllPlayers {
+        users = users.withAllPlayers {
             hit(it, Cards.NUMBER_OF_INIT_CARDS)
         }
 
@@ -20,17 +20,17 @@ class BlackjackGame(initPlayers: Players) {
     }
 
     fun isGameOver(): Boolean {
-        return players.isAllOver()
+        return users.isAllOver()
     }
 
     fun playUser(getHit: (User) -> Boolean): User {
-        val player = players.findNotOver().first()
+        val player = users.findNotOver().first()
         if (getHit(player)) {
-            players = players.update(hit(player))
+            users = users.update(hit(player))
         } else {
-            players = players.stay(player)
+            users = users.stay(player)
         }
-        return players.find(player.name) ?: player
+        return users.find(player.name) ?: player
     }
 
     fun isDealerGameOver(): Boolean {
@@ -43,6 +43,6 @@ class BlackjackGame(initPlayers: Players) {
     }
 
     fun createResults(): Results {
-        return Results(players, dealer)
+        return Results(users, dealer)
     }
 }

@@ -1,11 +1,11 @@
 package blackjack.model
 
-class Results(players: Players, dealer: Dealer) {
+class Results(users: Users, dealer: Dealer) {
     val playerResults: List<PlayerResult>
     val dealerResult: DealerResult
 
     init {
-        playerResults = players.values.map { player ->
+        playerResults = users.values.map { player ->
             PlayerResult(player, player.isWinThen(dealer))
         }
 

@@ -4,9 +4,9 @@ import blackjack.model.BlackjackGame
 import blackjack.model.Cards
 import blackjack.model.Dealer
 import blackjack.model.Player
-import blackjack.model.Players
 import blackjack.model.Results
 import blackjack.model.User
+import blackjack.model.Users
 
 object OutputView {
 
@@ -17,20 +17,21 @@ object OutputView {
     private fun cardsToString(cards: Cards, skip: Int = 0): String {
         return cards.values
             .drop(skip)
-            .map { "${CardNumberView.toString(it.cardNumber)}${SuitView.toString(it.suit)}" }
-            .joinToString(",")
+            .joinToString(",") {
+                "${CardNumberView.toString(it.cardNumber)}${SuitView.toString(it.suit)}"
+            }
     }
 
     fun printInitialState(game: BlackjackGame) {
-        println("${game.dealer.name}와 ${game.players.values.map { it.name }.joinToString(", ")}에게 2장의 카드를 나누어 주었습니다.")
+        println("${game.dealer.name}와 ${game.users.values.joinToString(", ") { it.name }}에게 2장의 카드를 나누어 주었습니다.")
         printDealer(game.dealer)
-        printPlayers(game.players)
+        printPlayers(game.users)
         println()
     }
 
     fun printFinalState(game: BlackjackGame) {
         printPlayerWithScore(game.dealer)
-        game.players.values.forEach { printPlayerWithScore(it) }
+        game.users.values.forEach { printPlayerWithScore(it) }
     }
 
     fun printWinners(results: Results) {
@@ -41,8 +42,8 @@ object OutputView {
         }
     }
 
-    private fun printPlayers(players: Players) {
-        players.values.forEach { printPlayer(it) }
+    private fun printPlayers(users: Users) {
+        users.values.forEach { printPlayer(it) }
         println()
     }
 
@@ -54,7 +55,7 @@ object OutputView {
         println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printDealer(player: Dealer) {
+    private fun printDealer(player: Dealer) {
         println("${player.name}카드: ${cardsToString(player.cards, skip = 1)}")
     }
 }
