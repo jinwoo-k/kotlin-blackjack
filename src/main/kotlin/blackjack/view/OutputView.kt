@@ -23,15 +23,19 @@ object OutputView {
     }
 
     fun printInitialState(game: BlackjackGame) {
-        println("${game.dealer.name}와 ${game.users.values.joinToString(", ") { it.name }}에게 2장의 카드를 나누어 주었습니다.")
-        printDealer(game.dealer)
-        printPlayers(game.users)
-        println()
+        game.players.with { users, dealer ->
+            println("${dealer.name}와 ${users.values.joinToString(", ") { it.name }}에게 2장의 카드를 나누어 주었습니다.")
+            printDealer(dealer)
+            printPlayers(users)
+            println()
+        }
     }
 
     fun printFinalState(game: BlackjackGame) {
-        printPlayerWithScore(game.dealer)
-        game.users.values.forEach { printPlayerWithScore(it) }
+        game.players.with { users, dealer ->
+            printPlayerWithScore(dealer)
+            users.values.forEach { printPlayerWithScore(it) }
+        }
     }
 
     fun printWinners(results: Results) {

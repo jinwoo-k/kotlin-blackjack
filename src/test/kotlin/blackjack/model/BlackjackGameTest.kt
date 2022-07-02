@@ -21,12 +21,12 @@ class BlackjackGameTest {
         val game = BlackjackGame(Users(playerList))
 
         Assertions.assertThat(game.isGameOver()).isEqualTo(false)
-        Assertions.assertThat(game.users.values[0].cards.values.size).isEqualTo(2)
+        Assertions.assertThat(game.players.withUsers { it.values[0].cards.values.size }).isEqualTo(2)
         game.playUser { true }
-        Assertions.assertThat(game.users.values[0].cards.values.size).isEqualTo(3)
+        Assertions.assertThat(game.players.withUsers { it.values[0].cards.values.size }).isEqualTo(3)
 
         game.playUser { false }
-        Assertions.assertThat(game.users.values[0].cards.values.size).isEqualTo(3)
+        Assertions.assertThat(game.players.withUsers { it.values[0].cards.values.size }).isEqualTo(3)
         Assertions.assertThat(game.isGameOver()).isEqualTo(true)
     }
 
@@ -35,9 +35,9 @@ class BlackjackGameTest {
         val playerList = listOf(User("jason"))
         val game = BlackjackGame(Users(playerList))
 
-        Assertions.assertThat(game.dealer.cards.values.size).isEqualTo(2)
+        Assertions.assertThat(game.players.withDealer { it.cards.values.size }).isEqualTo(2)
         game.playDealer()
-        Assertions.assertThat(game.dealer.cards.values.size).isEqualTo(3)
+        Assertions.assertThat(game.players.withDealer { it.cards.values.size }).isEqualTo(3)
     }
 
     @Test

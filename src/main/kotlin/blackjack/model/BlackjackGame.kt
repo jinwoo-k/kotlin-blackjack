@@ -1,16 +1,17 @@
 package blackjack.model
 
 class BlackjackGame(initUsers: Users) {
-    private var cards: Cards = Cards.shuffledCards()
-    var users: Users = initUsers
-    var dealer: Dealer = Dealer()
+    private var cards = Cards.shuffledCards()
+    val players: Players
 
     init {
-        users = users.withAllPlayers {
-            hit(it, Cards.NUMBER_OF_INIT_CARDS)
+        players = Players(initUsers, Dealer())
+        players.updateUsers { users ->
+            users.withAllPlayers { user ->
+                hit(user, Cards.NUMBER_OF_INIT_CARDS)
+            }
         }
-
-        dealer = hit(dealer, Cards.NUMBER_OF_INIT_CARDS)
+        players.updateDealer { hit(it, Cards.NUMBER_OF_INIT_CARDS) }
     }
 
     private fun <T : Player<T>> hit(player: T, numOfCards: Int = Cards.NUMBER_OF_GIVE_CARDS): T {
@@ -20,29 +21,36 @@ class BlackjackGame(initUsers: Users) {
     }
 
     fun isGameOver(): Boolean {
-        return users.isAllOver()
+        return players.withUsers { it.isAllOver() }
     }
 
     fun playUser(getHit: (User) -> Boolean): User {
-        val player = users.findNotOver().first()
-        if (getHit(player)) {
-            users = users.update(hit(player))
-        } else {
-            users = users.stay(player)
+        val user = players.withUsers { it.findNotOver().first() }
+
+        players.updateUsers {
+            if (getHit(user)) {
+                return@updateUsers it.update(hit(user))
+            } else {
+                return@updateUsers it.stay(user)
+            }
         }
-        return users.find(player.name) ?: player
+
+        return players.withUsers { it.find(user.name) ?: user }
     }
 
     fun isDealerGameOver(): Boolean {
-        return dealer.cards.optimalScore().value > Score.DELAER_HIT_CRITERIA && !dealer.cards.isSoft()
+        return players.withDealer {
+            it.cards.optimalScore().value > Score.DELAER_HIT_CRITERIA && !it.cards.isSoft()
+        }
     }
 
     fun playDealer(): Dealer {
-        dealer = hit(dealer)
-        return dealer
+        return players.updateDealer {
+            hit(it)
+        }
     }
 
     fun createResults(): Results {
-        return Results(users, dealer)
+        return players.with { users, dealer -> Results(users, dealer) }
     }
 }
